@@ -1,0 +1,45 @@
+# -*- coding: utf-8 -*-
+
+
+import math
+a = int(input("1~100の整数 "))
+b = int(100 - a)
+
+a_s, b_s = str(a), str(b)
+
+print("投票比率  " + a_s + ' : ' + b_s)
+
+
+a_div = []
+b_div = []
+
+
+def divisor(side):
+    # 約数を算出、リストに挿入
+    n = int(side)
+    div = []
+    for i in range(2, n+1):
+        num = float(n)
+        ni = num / i
+        f = math.modf(ni)
+        if f[0] == 0:
+            div.insert(0, i)
+    return div
+
+
+a_div = divisor(a)
+b_div = divisor(b)
+a_set = set(a_div)
+b_set = set(b_div)
+t = a_set & b_set
+
+# 約数から最低限必要な投票人数を算出、出力
+if t == set():
+    print("最低、100人による投票です。")
+else:
+    max_divisor = max(t)
+    a_max_div, b_max_div = a / max_divisor, b / max_divisor
+    saitei = str(a_max_div + b_max_div)
+    print("最低、" + saitei + "人による投票です。")
+    str_a_max_div, str_b_max_div = str(a_max_div), str(b_max_div)
+    print("投票比率  " + str_a_max_div + ' : ' + str_b_max_div)
